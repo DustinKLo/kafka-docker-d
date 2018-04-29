@@ -16,10 +16,8 @@ services:
     environment:
       #KAFKA_ADVERTISED_HOST_NAME: 192.168.1.100
       KAFKA_ADVERTISED_HOST_NAME: docker.for.mac.localhost
-      #KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://localhost:9092"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       #KAFKA_ADVERTISED_HOST_NAME: ${DOCKER_KAFKA_HOST}
-      #KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://${DOCKERHOST}:9092"
       #KAFKA_ZOOKEEPER_CONNECT: "${DOCKERHOST}:2181"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -32,6 +30,18 @@ services:
     environment:
      - POSTGRES_USER=postgres
      - POSTGRES_PASSWORD=postgres
+
+  schema_registry:
+    image: confluentinc/cp-schema-registry
+    hostname: schema_registry
+    depends_on:
+      - zookeeper
+      - kafka
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema_registry
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
 
   connect-debezium:
     #image: debezium/connect:${DEBEZIUM_VERSION}
@@ -48,12 +58,13 @@ services:
       - OFFSET_STORAGE_TOPIC=my_connect_offsets
 
   connect-confluent:
-    image: confluentinc/cp-kafka-connect
+    #image: confluentinc/cp-kafka-connect
+    image: dustinklo/cp-kafka-connect-port-8084
     hostname: connect
     depends_on:
       - zookeeper
       - kafka
-      #- schema_registry
+      - schema_registry
     ports:
       - "8084:8084"
     environment:

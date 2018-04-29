@@ -1,0 +1,18 @@
+{
+	"name":"source-twitter-distributed",
+	"config": {
+		"connector.class":"com.eneco.trading.kafka.connect.twitter.TwitterSourceConnector",
+		"tasks.max":"1",
+		"topic":"demo-3-twitter",
+		"key.converter":"org.apache.kafka.connect.json.JsonConverter",
+		"key.converter.schemas.enable":"true",
+		"value.converter":"org.apache.kafka.connect.json.JsonConverter",
+		"value.converter.schemas.enable":"true",
+		"twitter.consumerkey":"EIbULwG7n6JfAbBgygt4nAnUK",
+		"twitter.consumersecret":"rm39ENRqJPKalD82y8wbXTm7g6xJ3XBqATc4ZtQj3WGmMYT6Qf",
+		"twitter.token":"1084517047-0PHh7z0VylX6jGG3MasiwKCB4aexwZZz4JPUDDE",
+		"twitter.secret":"0owIVLfmCqbl3mPM29NGAPoVe8qnZst93sBbmrsA688Fj",
+		"track.terms":"programming,java,kafka,scala",
+		"language":"en"
+	}
+}

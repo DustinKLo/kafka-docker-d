@@ -3,11 +3,11 @@ docker-compose -f docker-compose.yml up
 # safely take image down
 docker-compose -f docker-compose.yml down
 
-# creates 3 brokers
+# creates 3 brokers (need to work on this)
 docker-compose scale kafka=3
 
 # enters container for multiple brokers
-docker run --rm -it --net=host wurstmeister/kafka bash
+docker run --rm -it --user root --net=host wurstmeister/kafka bash
 
 # works for one broker
 # kafka-topics.sh --create --zookeeper $KAFKA_ZOOKEEPER_CONNECT --replication-factor 1 --partitions 1 --topic topic1
